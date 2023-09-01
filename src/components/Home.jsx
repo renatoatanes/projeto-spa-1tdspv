@@ -1,8 +1,10 @@
 export default function Home(){
 
+ DocumentTimeline.title = "Home"; 
+
     return(
-        <main>
-            <h1>HOME</h1>
-        </main>
+        <div>
+            <h1>COMPONENTE - HOME</h1>
+        </div>
     )
 }

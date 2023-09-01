@@ -1,4 +1,5 @@
-import Navbar from "./components/Navbar";
+import Cabecalho from "./components/Cabecalho"
+import Rodape from "./components/Rodape"
 import { Outlet, useRoutes } from "react-router-dom";
 
 export default function App() {
@@ -7,8 +8,9 @@ export default function App() {
 
   return (
     <>
-      <Navbar/>
+      <Cabecalho/>
       <Outlet/>
+      <Rodape/>
     </>
   )
 }
