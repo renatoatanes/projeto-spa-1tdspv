@@ -1,26 +1,16 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
+import { Outlet} from "react-router-dom";
+import Cabecalho from "./components/Cabecalho";
+import Rodape from "./components/Rodape";
 
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Home from './routes/Home.jsx';
-import Produtos from './routes/Produtos.jsx';
-import EditarProdutos from './routes/EditarProdutos.jsx';
-import Error from './routes/Error.jsx';
-import ExcluirProdutos from './routes/ExcluirProdutos.jsx';
+export default function App() {
+  
 
-const router = createBrowserRouter([
-  {path: "/" , element: <App/>, errorElement: <Error/>,
-    children:[
-      {path: "/" , element: <Home/>},
-      {path: "/produtos" , element: <Produtos/>},
-      {path: "/editar/produtos/:id" , element: <EditarProdutos/>},
-      {path: "/excluir/produtos/:id" , element: <ExcluirProdutos/>},
-    ]}
-])
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-    
-    <RouterProvider router={router}/>
-  ,
-)
+  return (
+    <>
+      <Cabecalho/>
+      <Outlet/>
+      <Rodape/>
+    </>
+  )
+}
