@@ -75,7 +75,8 @@ export default function EditarProdutos() {
               />
             </div>
             <div>
-              <button>EDITAR</button>
+              <button onClick={()=> navigate("/produtos")}>Cancelar</button>
+              <button>Salvar</button>
             </div>
           </fieldset>
         </form>
