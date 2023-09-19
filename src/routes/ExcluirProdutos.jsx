@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate,Link, useParams } from "react-router-dom"
 import { ListaProdutos } from "../components/ListaProdutos";
 import style from './ExcluirProdutos.module.css';
 
@@ -11,12 +11,16 @@ export default function ExcluirProdutos() {
   const produto = ListaProdutos.filter((item) => item.id == id)[0];
 
   const handleDelete = () =>{
-
     let indice = ListaProdutos.findIndex(item => item.id ==  produto.id);
     ListaProdutos.splice(indice,1);
     alert("Produto excluído com sucesso!");
     navigate("/produtos");
- }
+  }
+
+  const handleEditar = () =>{
+    navigate(`/editar/produtos/${produto.id}`);
+  }
+
 
   return (
     <div className={style.containerExcluir}>
@@ -32,6 +36,7 @@ export default function ExcluirProdutos() {
                 </figcaption>
               </figure>
               <button onClick={handleDelete}>Excluir</button>
+              <button onClick={handleEditar}>Editar</button>
               <button onClick={()=> navigate("/produtos")}>Cancelar</button>  
           </section>
       </div>
