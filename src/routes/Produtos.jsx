@@ -1,73 +1,69 @@
-import { ListaProdutos } from "../components/ListaProdutos";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {AiFillEdit as Editar, AiOutlineDelete as Excluir} from "react-icons/ai";
 import classes from "./Produtos.module.css";
 import { useEffect, useState } from "react";
+import ModalInserir from "../components/ModalInserir";
+import "./Produtos.scss";
 
 export default function Produtos() {
 
     document.title = "Lista de Produtos";
 
-    const [exemplo, setExemplo] = useState([{}]);
-
-    const [count, setCount] = useState(0);
+    const [listaProdutoLocal, setListaProdutoLocal] = useState([{}])
 
     useEffect(()=>{
-      console.log("Use-Effect que será sempre renderizado!");
-    });
 
-    useEffect(()=>{
-      console.log("Use-Effect que será renderizado apenas 1 vez!");
+        fetch('http://localhost:5000/produtos',{
 
-        setExemplo(ListaProdutos);
-
+          method: 'GET',
+          headers:{
+            'Content-Type': 'application/json',
+          },
+        }).then((response)=> response.json())
+        .then((data)=>{
+            setListaProdutoLocal(data);
+        })
+        .catch((err)=>console.log(err));
+      
     },[]);
 
-    useEffect(()=>{
-      console.log("Use-Effect que será renderizado o objeto ou componente ou elemento que está no array de depenências sofrer atualização.");
-    },[count]);
-
-
-    const navigate = useNavigate();
+    const [open, setOpen] = useState(false);
 
     return (
       <div>
           <h1>LISTA DE PRODUTOS</h1>
+        
+        {open ? <ModalInserir open={open} setOpen={setOpen}/> : ""}
 
+      <Link onClick={()=> setOpen(true)}>Cadastrar Produtos</Link>
 
         <div>
-          <button onClick={()=> setCount(count + 1)}>COUNTER - {count}</button>
-        </div>
-
-        <div>
-          <table className={classes.tableStyle}>
+          <table className="tableStyle">
             <thead>
-              <tr className={classes.tableHeaderStyle}>
-                <th className={classes.tableHeaderStyle}>ID</th>
-                <th className={classes.tableHeaderStyle}>Nome</th>
-                <th className={classes.tableHeaderStyle}>Descrição</th>
-                <th className={classes.tableHeaderStyle}>Preço</th>
-                <th className={classes.tableHeaderStyle}>Imagem</th>
-                <th className={classes.tableHeaderStyle}>Editar/Excluir</th>
-                <th className={classes.tableHeaderStyle}>Adicionar</th>
+              <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Preço</th>
+                <th>Imagem</th>
+                <th>Editar/Excluir</th>
                 </tr>
             </thead>
             <tbody>
-              {exemplo.map((produto, index) => (
-                <tr key={index} className={classes.tableLineStyle}>
-                  <td className={classes.tableDataStyle}>{produto.id}</td>
-                  <td className={classes.tableDataStyle}>{produto.nome}</td>
-                  <td className={classes.tableDataStyle}>{produto.desc}</td>
-                  <td className={classes.tableDataStyle}>{produto.preco}</td>
-                  <td className={classes.tableDataStyle}><img src={produto.img} alt={produto.desc} /></td>
-                  <td className={classes.tableDataStyle}><Link to={`/editar/produtos/${produto.id}`}><Editar/></Link> | <Link to={`/excluir/produtos/${produto.id}`}><Excluir/></Link></td>
-                  <td className={classes.tableDataStyle}><Link to={"/adicionar/produtos"}><button>adicionar Produtos</button></Link></td>
+              {listaProdutoLocal.map((produto, index) => (
+                <tr key={index}>
+                  <td>{produto.id}</td>
+                  <td>{produto.nome}</td>
+                  <td>{produto.desc}</td>
+                  <td>{produto.preco}</td>
+                  <td><img src={produto.img} alt={produto.desc} width={100}/></td>
+                  <td><Link to={`/editar/produtos/${produto.id}`}><Editar/></Link> | <Link to={`/excluir/produtos/${produto.id}`}><Excluir/></Link></td>
                 </tr>
               ))} 
             </tbody>
             <tfoot>
               <tr>
-                <td colSpan="5" className={classes.tableDataStyle}>Total de Produtos: {ListaProdutos.length}</td>
+                <td colSpan="6">Total de Produtos: {listaProdutoLocal.length}</td>
               </tr>
             </tfoot>
           </table>
@@ -76,4 +72,20 @@ export default function Produtos() {
       </div>
     )
   }
+
   
+//   <div>
+//   <button onClick={()=> setCount(count + 1)}>COUNTER - {count}</button>
+// </div>
+
+  
+  // const [exemplo, setExemplo] = useState([{}]);
+  // const [count, setCount] = useState(0);
+
+  // useEffect(()=>{
+  //   console.log("Use-Effect que será sempre renderizado!");
+  // });
+  
+  // useEffect(()=>{
+  //   console.log("Use-Effect que será renderizado o objeto ou componente ou elemento que está no array de depenências sofrer atualização.");
+  // },[count]);
