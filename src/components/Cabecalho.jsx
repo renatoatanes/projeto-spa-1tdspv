@@ -4,7 +4,7 @@ export default function Cabecalho() {
   return (
     <>
       <header>
-        <h1>Vite + React / Coded By- RM552029</h1>
+        <h1>Vite + React / Coded by- rm552029</h1>
         <ul>
           <li>
             <Link to="/">HOME</Link>
